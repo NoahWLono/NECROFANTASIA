@@ -827,13 +827,15 @@ def scene_boot(t, sb):
             if shown > i:
                 part = ln[:int(len(ln) * min(1, (shown - i) * 1.6))]
                 col = (255, 120, 140) if 'WARNING' in ln else (CRAIL if i == 0 else (200, 200, 190))
+                fade = 1 - ease((beat - 29) / 3)
+                col = tuple(int(c * fade) for c in col)
                 text(d, (160, 200 + i * 56), part, f, col)
         if int(t * 2.5) % 2:
             yy = 200 + min(len(BOOT_LINES) - 1, int(shown)) * 56
             d.rectangle((140, yy, 152, yy + 38), fill=CRAIL)
     # spark bloom
-    if beat >= 28:
-        u = ease((beat - 28) / 6)
+    if beat >= 31:
+        u = ease((beat - 31) / 5)
         sz = int(80 + 520 * u)
         sp = spark(sz, CRAIL, t * 0.4, seed=5)
         pul = 1 + 0.05 * TL.pulse('kick', t, 0.12)
